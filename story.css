@@ -1,0 +1,48 @@
+:root{color-scheme:dark;--ink:#f4efe3;--dim:#b9c7da;--gold:#edc78a}
+*{box-sizing:border-box}
+html{scroll-behavior:auto;overflow-x:hidden}
+body{margin:0;background:#101726;color:var(--ink);font-family:'PingFang SC','Microsoft YaHei',sans-serif;overflow-x:hidden}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;border:1px solid #d5e4ff28;background:#101726b3;border-radius:24px;padding:9px 15px;cursor:pointer;backdrop-filter:blur(12px)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+header,footer{position:fixed;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px max(22px,calc((100vw - 900px)/2));font-size:12px}
+header{top:0;padding-top:max(16px,env(safe-area-inset-top));background:linear-gradient(#101726e8,transparent)}
+header a{color:#fff1d9;text-decoration:none;letter-spacing:3px}
+footer{bottom:0;padding-bottom:max(16px,env(safe-area-inset-bottom));background:linear-gradient(transparent,#101726f5)}
+#position{color:#b7c7dc;font:11px Georgia,serif;letter-spacing:2px}
+.chapter{max-width:1040px;margin:auto;position:relative;padding:24px 0 12px;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.chapter:first-child{padding-top:80px;min-height:92svh}
+.chapter:last-child{padding-bottom:110px}
+.scene{position:relative;aspect-ratio:16/10;overflow:hidden;isolation:isolate;background:#202d46}
+.backdrop{position:absolute;inset:-3%;background-image:url('assets/scenes.png');background-size:200% 400%;background-position:var(--bx) var(--by);transform:scale(1.04);will-change:transform}
+.chapter.visible .backdrop{animation:camera 21s ease-in-out infinite alternate}
+.chapter:nth-child(even) .backdrop{animation-direction:alternate-reverse}
+.scene::after{content:'';position:absolute;inset:0;z-index:5;background:linear-gradient(#07132a14,transparent 60%,#08132966);pointer-events:none}
+.hero{position:absolute;bottom:1%;left:var(--hero-x,62%);height:82%;aspect-ratio:3/4;background-image:url('assets/hero.png');background-size:400% 200%;background-position:0 100%;z-index:3;filter:drop-shadow(5px 6px 5px #05102255);transform-origin:bottom center}
+.hero.walk{bottom:0;left:26%;height:77%}
+.hero.close{height:130%;bottom:-42%;left:55%}
+.chapter.visible .hero.still{animation:blink 6s steps(1,end) infinite}
+.chapter.visible .hero.walk{animation:walk 1.05s steps(1,end) infinite,drift 26s linear infinite alternate}
+.light{position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(115deg,transparent 40%,#ffd78b24 52%,transparent 65%);mix-blend-mode:screen}
+.chapter.visible .light{animation:light 12s ease-in-out infinite alternate}
+.weather{position:absolute;inset:-30%;z-index:4;pointer-events:none;opacity:.35;background-image:radial-gradient(ellipse,#fff4ca 0 1px,transparent 2px);background-size:73px 91px;transform:rotate(-12deg)}
+.chapter.visible .weather{animation:dust 17s linear infinite}
+.rain .weather{opacity:.27;background-image:linear-gradient(110deg,transparent 48%,#cdeaff 49% 50%,transparent 51%);background-size:37px 73px;animation:rain .9s linear infinite!important}
+.copy{padding:23px 26px 0;max-width:720px;margin:0 auto;width:100%}
+.date{font-size:11px;letter-spacing:2px;color:var(--gold);margin:0 0 10px}
+h1,h2{font-family:'Songti SC','STSong',serif;font-weight:500;line-height:1.5;letter-spacing:1px;margin:0 0 12px;font-size:clamp(26px,6.8vw,42px)}
+p{font-size:clamp(15px,3.9vw,18px);line-height:1.95;letter-spacing:.3px;color:var(--dim);margin:0}
+.cover h1{font-size:clamp(33px,9vw,59px)}
+#start{margin-top:22px;background:#ebc48c;color:#172238;border:0;padding:13px 23px;font-weight:600}
+.note{font-size:10px;line-height:1.8;margin-top:20px;color:#8191a8}
+.chapter:not(.visible) *{animation-play-state:paused!important}
+body.paused .hero,body.paused .backdrop,body.paused .weather,body.paused .light{animation-play-state:paused!important}
+@keyframes camera{from{transform:scale(1.04) translate(-.7%,.3%)}to{transform:scale(1.12) translate(.7%,-.5%)}}
+@keyframes walk{0%{background-position:0 0}25%{background-position:33.333333% 0}50%{background-position:66.666667% 0}75%{background-position:100% 0}}
+@keyframes blink{0%,90%,100%{background-position:0 100%}92%{background-position:33.333333% 100%}94%{background-position:66.666667% 100%}97%{background-position:100% 100%}}
+@keyframes drift{from{transform:translateX(-28px)}to{transform:translateX(72px)}}
+@keyframes light{from{opacity:.2;transform:translateX(-12%)}to{opacity:.8;transform:translateX(12%)}}
+@keyframes dust{to{background-position:25px -182px}}
+@keyframes rain{to{background-position:-37px 73px}}
+@media(min-width:750px){.chapter{min-height:0}.scene{aspect-ratio:2/1}.copy{padding-top:22px}.hero{height:90%}}
+@media(prefers-reduced-motion:reduce){*,*::after{animation:none!important}.weather{display:none}}
